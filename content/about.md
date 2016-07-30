@@ -11,4 +11,5 @@ Please feel free to add information, by emailing me at [yaleman@ricetek.net](mai
 
 # Todo
 
-Make some scripts to collect data automagically for the site.
+* Fix the protocol pages so they aren't Tcps and Udps
+* Make some scripts to collect data automagically for the site.
