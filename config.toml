@@ -1,0 +1,4 @@
+baseurl = "https://portdb.yaleman.org/"
+languageCode = "en-us"
+title = "portDB"
+theme = "portDB"

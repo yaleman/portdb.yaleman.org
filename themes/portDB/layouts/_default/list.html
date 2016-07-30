@@ -1,0 +1,14 @@
+{{ partial "header.html" . }}
+<section id="article-listing">
+<article  itemtype="http://schema.org/Blog">
+
+		<!-- <h1 class="list-title">{{ .Title }}</h1> -->
+{{ range .Data.Pages }}
+
+    <li>    <a href="{{ .RelPermalink }}">{{ .Title }}{{ if .Draft }} #Draft{{ end }}</a>   </li>	
+
+{{ end }}
+
+</article>
+</section>
+{{ partial "footer.html" . }}
