@@ -1,63 +1,71 @@
-#!/usr/bin/python
+#!/usr/local/bin/python3
+
 
 import os
 import sys
+from multiprocessing import Pool
 
+DATADIR = "data"
+OUTPUT_DIR = "content"
 
-datadir = "data"
-outputdir = "content"
+PROTOCOLS = [ 'tcp', 'udp' ]
+NUM_PROCESSES = 4
 
-protocols = [ 'tcp', 'udp' ]
-
-
-post_template = """+++
+POST_TEMPLATE = """+++
 title = "{protocol}/{port}"
 tags = [ "{protocol}" ]
 categories = [ "{protocol}" ]
 +++
 """
 
-for protocol in protocols:
-    proto_output_dir = "{}/{}".format(outputdir, protocol)
-    protodatadir = "{}/{}".format( datadir, protocol )
-    # die if can't find protocol data, probably something going horribly wrong
-    if os.path.exists( protodatadir ) == False: 
-        sys.exit( "Can't find protocol data dir for '{}'".format( protocol ))        
-    # did you nuke the output dir? let's create it.
-    if os.path.exists( proto_output_dir ) == False:
-        os.mkdir( proto_output_dir)
-        print( "Created protocol directory" )
-    print( "Processing {}".format( protocol  ) )
-    # do all the ports!
-    for port in os.listdir( protodatadir ):
-        portdir = "{}/{}/{}".format( datadir, protocol, port )
-        portfile = "{}/{}.md".format( proto_output_dir, port )
-        if os.path.isdir( portdir ):
-            info = { 'protocol' : protocol.upper(), 'port' : port }
-            # base template
-            portdata = post_template.format( **info )
-            notes = ianadata = False
-            if os.path.exists( "{}/notes.md".format( portdir ) ):
-                # notes file exists
-                portdata += "\n"+open( "{}/notes.md".format( portdir ), 'r' ).read()
-                notes = True
-            if os.path.exists( "{}/iana.md".format( portdir ) ):
-                # iana data exists
-                portdata += "\n# IANA Data\n\n"+open( "{}/iana.md".format( portdir ) ).read()
-                ianadata = True
-            if notes + ianadata == False:
-                # die if there's no notes and data, that's weird.
-                sys.exit( "No notes/ianadata for {}/{}".format( protocol, port ) )
-            # check if we need to write to disk
-            writefile = False
-            if os.path.exists( portfile ):
-                if portdata != open(portfile, 'r').read():
-                    writefile = True
-            else:
+def do_content(inputdata):
+    """ takes a protocol and port tuple and does the processing for that combination """
+
+    protocol, port = inputdata
+    portdir = "{}/{}/{}".format(DATADIR, protocol, port)
+    portfile = "{}/{}/{}.md".format(OUTPUT_DIR, protocol, port)
+    if os.path.isdir(portdir):
+        info = {'protocol' : protocol.upper(), 'port' : port}
+        # base template
+        portdata = POST_TEMPLATE.format(**info)
+        notes = ianadata = False
+        if os.path.exists("{}/notes.md".format(portdir)):
+            # notes file exists
+            portdata += "\n"+open("{}/notes.md".format(portdir), 'r').read()
+            notes = True
+        if os.path.exists("{}/iana.md".format(portdir)):
+            # iana data exists
+            portdata += "\n# IANA Data\n\n"+open("{}/iana.md".format(portdir)).read()
+            ianadata = True
+        if True not in (notes, ianadata):
+            # die if there's no notes and data, that's weird.
+            sys.exit("No notes/ianadata for {}/{}".format(protocol, port))
+        # check if we need to write to disk
+        writefile = False
+        if os.path.exists(portfile):
+            if portdata != open(portfile, 'r').read():
                 writefile = True
-            if writefile:
-                fh = open( portfile, 'w' )
-                fh.write( portdata )
-                fh.close()
-            
+        else:
+            writefile = True
+        if writefile:
+            with open(portfile, 'w') as file_handle:
+                file_handle.write(portdata)
+
+
+for proto in PROTOCOLS:
+    proto_output_dir = "{}/{}".format(OUTPUT_DIR, proto)
+    protodatadir = "{}/{}".format(DATADIR, proto)
+    # die if can't find protocol data, probably something going horribly wrong
+    if not os.path.exists(protodatadir):
+        sys.exit("Can't find protocol data dir for '{}'".format(proto))
+    # did you nuke the output dir? let's create it.
+    if not os.path.exists(proto_output_dir):
+        os.mkdir(proto_output_dir)
+        print("Created protocol directory")
+    print("Processing {}".format(proto))
+    # do all the ports!
+    with Pool(processes=NUM_PROCESSES) as pool:
+        inputdata = [(proto, port) for port in os.listdir(protodatadir)]
+        for i in pool.imap_unordered(do_content, inputdata):
+            pass
 
