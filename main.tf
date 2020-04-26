@@ -56,15 +56,11 @@ data cloudflare_zones yaleman_org {
     status = "active"
   }
 }
-# resource cloudflare_record site_record {
-#   zone_id = data.cloudflare_zones.yaleman_org.id
-#   name = "portdb.yaleman.org"
-#   type = "CNAME"
-#   value = "${local.domain_name}.s3-website-${local.aws_region}.amazonaws.com"
-#   ttl = 1
-#   proxied = true
-# }
-
-output zoneinfo {
-  value = data.cloudflare_zones.yaleman_org.zones[0].id
+resource cloudflare_record site_record {
+  zone_id = data.cloudflare_zones.yaleman_org.zones[0].id
+  name = "portdb.yaleman.org"
+  type = "CNAME"
+  value = "${local.domain_name}.s3-website-${local.aws_region}.amazonaws.com"
+  ttl = 1
+  proxied = true
 }
