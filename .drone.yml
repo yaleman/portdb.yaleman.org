@@ -55,4 +55,6 @@ steps:
     CLOUDFLARE_EMAIL:
       from_secret: CLOUDFLARE_EMAIL
   commands:
-  - hugo deploy --dryRun
+  - pwd
+  - ls
+  - hugo deploy --source="/drone/" --dryRun
