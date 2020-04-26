@@ -62,5 +62,5 @@ resource cloudflare_record site_record {
   type = "CNAME"
   value = "${local.domain_name}.s3-website-${local.aws_region}.amazonaws.com"
   ttl = 1
-  proxied = true
+  proxied = false
 }
