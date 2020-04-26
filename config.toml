@@ -2,3 +2,31 @@ baseurl = "https://portdb.yaleman.org/"
 languageCode = "en-us"
 title = "portDB"
 theme = "portDB"
+
+[deployment]
+# By default, files are uploaded in an arbitrary order.
+# Files that match the regular expressions in the "Order" list
+# will be uploaded first, in the listed order.
+order = [".jpg$", ".gif$"]
+
+
+[[deployment.targets]]
+# deployment configuration https://gohugo.io/hosting-and-deployment/hugo-deploy/
+# An arbitrary name for this target.
+name = "portdb"
+
+# S3; see https://gocloud.dev/howto/blob/#s3
+# For S3-compatible endpoints, see https://gocloud.dev/howto/blob/#s3-compatible
+URL = "s3://portdb.yaleman.org?region=us-east-1"
+
+[[deployment.matchers]]
+#  Cache static assets for 1 year.
+pattern = "^.+\\.(js|css|svg|ttf)$"
+cacheControl = "max-age=31536000, no-transform, public"
+
+[[deployment.matchers]]
+pattern = "^.+\\.(png|jpg)$"
+cacheControl = "max-age=31536000, no-transform, public"
+
+[[deployment.matchers]]
+pattern = "^.+\\.(html|xml|json)$"
