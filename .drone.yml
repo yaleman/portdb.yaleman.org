@@ -57,4 +57,4 @@ steps:
   commands:
   - pwd
   - ls
-  - hugo deploy --source="/drone/" --dryRun
+  - hugo deploy --source="./" --dryRun
