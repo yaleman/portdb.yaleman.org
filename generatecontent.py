@@ -17,6 +17,8 @@ tags: [ "{protocol}" ]
 categories : [ "{protocol}" ]
 url: /{protocol}/{port}
 ---
+
+[Home](/) - [{protocol}](/{protocol}/) - {port}
 """
 
 def do_content(inputdata):
@@ -26,7 +28,7 @@ def do_content(inputdata):
     portdir = "{}/{}/{}".format(DATADIR, protocol, port)
     portfile = "{}/{}/{}.md".format(OUTPUT_DIR, protocol, port)
     if os.path.isdir(portdir):
-        info = {'protocol' : protocol.upper(), 'port' : port}
+        info = {'protocol' : protocol, 'port' : port}
         # base template
         portdata = POST_TEMPLATE.format(**info)
         notes = ianadata = False
