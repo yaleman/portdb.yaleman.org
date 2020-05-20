@@ -1,7 +1,6 @@
 ---
 title: portdb.yaleman.org
-url: /
-layout: page
+permalink: /
 ---
 
 # Welcome to the portDB
