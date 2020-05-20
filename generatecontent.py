@@ -6,16 +6,17 @@ import sys
 from multiprocessing import Pool
 
 DATADIR = "data"
-OUTPUT_DIR = "content"
+OUTPUT_DIR = "docs"
 
 PROTOCOLS = [ 'tcp', 'udp' ]
 NUM_PROCESSES = 4
 
-POST_TEMPLATE = """+++
-title = "{protocol}/{port}"
-tags = [ "{protocol}" ]
-categories = [ "{protocol}" ]
-+++
+POST_TEMPLATE = """---
+title: "{protocol}/{port}"
+tags: [ "{protocol}" ]
+categories : [ "{protocol}" ]
+url: /{protocol}/{port}
+---
 """
 
 def do_content(inputdata):

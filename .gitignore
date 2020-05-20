@@ -1,2 +1,4 @@
 public/
 .terraform/*
+_site/
+.jekyll-cache/
