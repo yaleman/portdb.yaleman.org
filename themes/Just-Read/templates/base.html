@@ -77,7 +77,7 @@
 	{% endif %}
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="MobileOptimized" content="320" />
-	<meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="shortcut icon" href="{{ SITEURL }}/favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="{{ SITEURL }}/favicon.ico" type="image/x-icon" />
 	<link href='https://fonts.googleapis.com/css?family=Droid+Sans:700,400|Droid+Sans+Mono' rel='stylesheet' type='text/css' />
@@ -103,6 +103,9 @@
 		<h1 class="huge">
 			<a href="{{ SITEURL }}">{{ SITENAME }}</a>
 			{% if article %} - <a href="/category/{{ article.category }}.html">{{ article.category }}</a> / <a href="#">{{ article.title }}</a>{% endif %}
+			{% for cat,articles in categories %}
+			| <a href="/category/{{ cat }}.html">{{cat}}</a>
+			{% endfor %}
 		</h1>
 	</div>
 </header>
@@ -128,11 +131,8 @@
 			{% endfor %}
 		</ul>
 
-		<p role="contentinfo">{% if FOOTERTEXT %}
-		{{ FOOTERTEXT }}
-		{% else %}
-		Developed by {{ AUTHOR }}
-		{% endif %}<br>
+		<p role="contentinfo">
+		Developed by {{ AUTHOR }} - any problems, please <a href="https://github.com/yaleman/portdb.yaleman.org/issues">log an issue on GitHub</a><br />
 		<small>
 			Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">Pelican</a>.</p>
 		</small>

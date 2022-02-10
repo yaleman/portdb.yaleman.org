@@ -3,12 +3,11 @@
 """ content generator """
 
 import asyncio
-from datetime import datetime
 import json
 import os
 from pathlib import Path
 
-TODAY = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+TODAY = "1970-01-01T00:00:00+0000"
 
 DATADIR = "./data"
 OUTPUT_DIR = "content"
