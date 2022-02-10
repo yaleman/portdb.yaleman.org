@@ -1,0 +1,22 @@
+<div class="meta wrapper" id="searchmeta" name="searchmeta">
+	<input type="text" id="searchTerm" name="searchTerm"  placeholder="Port # Search" v-model="portFilter"/>
+
+	<ul>
+		<template v-for="item in portFiltered.slice(0, 20)">
+			<li style="list-style-type: none;"><a :href="'/'+item.message+'/'">| item.message |</a></li>
+		</template>
+	</ul>
+		{#
+		<time datetime="{{ article.date.isoformat() }}" pubdate>{{ article.locale_date }}</time>
+
+	<ul class="tag clearfix">
+		<li><a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a></li>
+{% if article.tags %}
+	{% for tag in article.tags %}
+		<li><a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a></li>
+	{% endfor %}
+{% endif %}
+	</ul>
+	{% if PDF_PROCESSOR %}<p><a href="{{ SITEURL }}/pdf/{{ article.slug }}.pdf">Download the .pdf</a></p>{% endif %}
+	#}
+</div>

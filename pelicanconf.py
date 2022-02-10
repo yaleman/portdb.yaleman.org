@@ -1,6 +1,8 @@
+""" pelican config """
+
 AUTHOR = 'James Hodgkinson'
 SITENAME = 'portDB'
-SITEURL = ''
+SITEURL = 'https://portdb.yaleman.org'
 
 PATH = 'content'
 
@@ -15,7 +17,7 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-
+THEME = "themes/Just-Read"
 # Blogroll
 # LINKS = (('Pelican', 'https://getpelican.com/'),
         #  ('Python.org', 'https://www.python.org/'),

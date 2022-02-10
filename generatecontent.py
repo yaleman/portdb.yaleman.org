@@ -4,6 +4,7 @@
 
 import asyncio
 from datetime import datetime
+import json
 import os
 from pathlib import Path
 
@@ -15,16 +16,19 @@ OUTPUT_DIR = "content"
 PROTOCOLS = [ 'tcp', 'udp' ]
 NUM_PROCESSES = 4
 
-POST_TEMPLATE = """
-title: {protocol}/{port}
-tags: [ "{protocol}" ]
+SEARCHFILE = Path("./themes/Just-Read/static/searchdata.json")
+
+
+POST_TEMPLATE = """title: {port}
+category: {protocol}
 date: {TODAY}
 slug: {protocol}/{port}
-category: {protocol}
 
-[portdb](/) / [{protocol}](/{protocol}/) / {port}
+[portdb](/) / [{protocol}](/category/{protocol}.html) / {port}
 
 """
+
+ALLDATA = []
 
 async def do_content(protocol, port, show: bool):
     """ takes a protocol and port tuple and does the processing for that combination """
@@ -48,7 +52,7 @@ async def do_content(protocol, port, show: bool):
         ianafile = Path(f"{portdir}/iana.md")
         if ianafile.exists():
             # iana data exists
-            portdata += f"\n# IANA Data\n\n{ianafile.read_text(encoding='utf8')}"
+            portdata += f"\n## IANA Data\n\n{ianafile.read_text(encoding='utf8')}"
             ianadata = True
         if True not in (notes, ianadata):
             # die if there's no notes and data, that's weird.
@@ -64,6 +68,9 @@ async def do_content(protocol, port, show: bool):
             writefile = True
         if writefile:
             portfile_ref.write_text(portdata, encoding="utf8")
+
+        ALLDATA.append(f"{protocol}/{port}")
+
 
 async def main():
     """ main func """
@@ -85,6 +92,9 @@ async def main():
         for port in os.listdir(protodatadir.as_posix()):
             await do_content(proto, port, show=show)
 
+
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
 loop.close()
+
+SEARCHFILE.write_text(json.dumps(ALLDATA), encoding="utf8")
