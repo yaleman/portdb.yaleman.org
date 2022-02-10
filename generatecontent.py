@@ -3,11 +3,14 @@
 """ content generator """
 
 import asyncio
+from datetime import datetime
 import os
 from pathlib import Path
 
+TODAY = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+
 DATADIR = "./data"
-OUTPUT_DIR = "docs"
+OUTPUT_DIR = "content"
 
 PROTOCOLS = [ 'tcp', 'udp' ]
 NUM_PROCESSES = 4
@@ -15,7 +18,9 @@ NUM_PROCESSES = 4
 POST_TEMPLATE = """---
 title: "{protocol}/{port}"
 tags: [ "{protocol}" ]
+date: {TODAY}
 categories : [ "{protocol}" ]
+
 url: /{protocol}/{port}
 ---
 
@@ -28,7 +33,7 @@ async def do_content(protocol, port, show: bool):
     portdir = f"{DATADIR}/{protocol}/{port}"
     portfile = f"{OUTPUT_DIR}/{protocol}/{port}.md"
     if os.path.isdir(portdir):
-        info = {'protocol' : protocol, 'port' : port}
+        info = {'protocol' : protocol, 'port' : port, "TODAY" : TODAY }
         # base template
         portdata = POST_TEMPLATE.format(**info)
         notes = ianadata = False
