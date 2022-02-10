@@ -16,11 +16,14 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.9'
-    - name: Running mypy
+    - name: Running pelican
       run: |
         python --version
         python -m pip install --quiet --no-cache-dir --upgrade poetry
         poetry install --no-deps
+        poetry run pelican content
+    - name: Running ghp-import
+      run: |
         poetry run ghp-import output -b gh-pages
         ./github-deploy.sh
 
