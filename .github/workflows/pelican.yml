@@ -17,12 +17,13 @@ jobs:
       with:
         python-version: '3.9'
     - name: Running pelican
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
       run: |
         python --version
         python -m pip install --quiet --no-cache-dir --upgrade poetry
         poetry install --no-dev
+
     - name: Running github-deploy
       run: |
         ./github-deploy.sh
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
