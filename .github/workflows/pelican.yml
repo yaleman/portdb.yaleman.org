@@ -20,7 +20,7 @@ jobs:
       run: |
         python --version
         python -m pip install --quiet --no-cache-dir --upgrade poetry
-        poetry install --no-deps
+        poetry install --no-dev
         poetry run pelican content
     - name: Running ghp-import
       run: |
