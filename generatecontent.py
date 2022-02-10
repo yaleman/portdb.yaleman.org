@@ -15,16 +15,15 @@ OUTPUT_DIR = "content"
 PROTOCOLS = [ 'tcp', 'udp' ]
 NUM_PROCESSES = 4
 
-POST_TEMPLATE = """---
-title: "{protocol}/{port}"
+POST_TEMPLATE = """
+title: {protocol}/{port}
 tags: [ "{protocol}" ]
 date: {TODAY}
-categories : [ "{protocol}" ]
+slug: {protocol}/{port}
+category: {protocol}
 
-url: /{protocol}/{port}
----
+[portdb](/) / [{protocol}](/{protocol}/) / {port}
 
-[Home](/) - [{protocol}](/{protocol}/) - {port}
 """
 
 async def do_content(protocol, port, show: bool):

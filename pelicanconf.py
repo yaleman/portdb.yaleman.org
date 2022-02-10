@@ -15,6 +15,7 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
+
 # Blogroll
 # LINKS = (('Pelican', 'https://getpelican.com/'),
         #  ('Python.org', 'https://www.python.org/'),
@@ -24,8 +25,13 @@ AUTHOR_FEED_RSS = None
 # Social widget
 # SOCIAL = (('You can add links in your config file', '#'),
         #   ('Another social link', '#'),)
-
+LOAD_CONTENT_CACHE = False
 DEFAULT_PAGINATION = 50
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
+
+ARTICLE_URL = '{slug}/'
+ARTICLE_SAVE_AS = '{slug}/index.html'
+PAGE_URL = '{category}/{slug}/'
+PAGE_SAVE_AS = '{category}/{slug}/index.html'
