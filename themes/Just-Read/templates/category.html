@@ -4,7 +4,7 @@
 {% block content %}
 <div role="main" class="content clearfix">
 <div class="wrapper main">
-	<h2>Posts categorized under: {{ category }}</h2>
+	<h2>Ports tagged with protocol: {{ category }}</h2>
 	{# <time datetime="{{ article.date.isoformat() }}" pubdate>{{ article.locale_date }}</time>  #}
 	<ol class="archive">
 		{% for article in articles %}
@@ -13,5 +13,6 @@
 	</ol>
 
 </div>
+{% include 'metadata.html' %}
 </div>
 {% endblock %}
