@@ -17,6 +17,8 @@ jobs:
       with:
         python-version: '3.9'
     - name: Running pelican
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
       run: |
         python --version
         python -m pip install --quiet --no-cache-dir --upgrade poetry
@@ -24,9 +26,3 @@ jobs:
     - name: Running github-deploy
       run: |
         ./github-deploy.sh
-
-
-    - uses: rehanhaider/pelican-to-github-pages@v1.0.3
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        GH_PAGES_CNAME: portdb.yaleman.org
