@@ -8,6 +8,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.9"
 httpx = "^0.22.0"
+pelican = {extras = ["markdown"], version = "^4.7.2"}
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.12.2"
