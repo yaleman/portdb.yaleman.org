@@ -1,9 +1,10 @@
-#!/usr/local/bin/python3
+#!/usr/bin/env python
 
+""" content generator """
 
-import os
-import sys
 from multiprocessing import Pool
+import os
+from pathlib import Path
 
 DATADIR = "data"
 OUTPUT_DIR = "docs"
@@ -21,54 +22,56 @@ url: /{protocol}/{port}
 [Home](/) - [{protocol}](/{protocol}/) - {port}
 """
 
-def do_content(inputdata):
+def do_content(input_data):
     """ takes a protocol and port tuple and does the processing for that combination """
 
-    protocol, port = inputdata
-    portdir = "{}/{}/{}".format(DATADIR, protocol, port)
-    portfile = "{}/{}/{}.md".format(OUTPUT_DIR, protocol, port)
+    protocol, port = input_data
+    portdir = f"{DATADIR}/{protocol}/{port}"
+    portfile = f"{OUTPUT_DIR}/{protocol}/{port}.md"
     if os.path.isdir(portdir):
         info = {'protocol' : protocol, 'port' : port}
         # base template
         portdata = POST_TEMPLATE.format(**info)
         notes = ianadata = False
-        if os.path.exists("{}/notes.md".format(portdir)):
+        notesfile = Path("{portdir}/notes.md")
+        if notesfile.exists():
             # notes file exists
-            portdata += "\n"+open("{}/notes.md".format(portdir), 'r').read()
+            portdata += "\n"+notesfile.read_bytes()
             notes = True
-        if os.path.exists("{}/iana.md".format(portdir)):
+        ianafile = Path(f"{portdir}/iana.md")
+        if ianafile.exists():
             # iana data exists
-            portdata += "\n# IANA Data\n\n"+open("{}/iana.md".format(portdir)).read()
+            portdata += "\n# IANA Data\n\n"+ianafile.read_bytes()
             ianadata = True
         if True not in (notes, ianadata):
             # die if there's no notes and data, that's weird.
-            sys.exit("No notes/ianadata for {}/{}".format(protocol, port))
+            raise ValueError(f"No notes/ianadata for {protocol}/{port}")
         # check if we need to write to disk
         writefile = False
-        if os.path.exists(portfile):
-            if portdata != open(portfile, 'r').read():
+        portfile_ref = Path(portfile)
+        if portfile_ref.exists():
+            if portdata != portfile_ref.read_bytes():
                 writefile = True
         else:
             writefile = True
         if writefile:
-            with open(portfile, 'w') as file_handle:
-                file_handle.write(portdata)
+            portfile_ref.write_bytes(portdata)
 
 
 for proto in PROTOCOLS:
-    proto_output_dir = "{}/{}".format(OUTPUT_DIR, proto)
-    protodatadir = "{}/{}".format(DATADIR, proto)
+    proto_output_dir = Path(f"{OUTPUT_DIR}/{proto}")
+    protodatadir = Path(f"{DATADIR}/{proto}")
     # die if can't find protocol data, probably something going horribly wrong
-    if not os.path.exists(protodatadir):
-        sys.exit("Can't find protocol data dir for '{}'".format(proto))
+    if not protodatadir.exists():
+        raise FileNotFoundError(f"Can't find protocol data dir for '{proto}'")
     # did you nuke the output dir? let's create it.
-    if not os.path.exists(proto_output_dir):
-        os.mkdir(proto_output_dir)
+    if not proto_output_dir.exists():
+        #os.mkdir(proto_output_dir)
+        proto_output_dir.mkdir()
         print("Created protocol directory")
-    print("Processing {}".format(proto))
+    print((f"Processing {proto}"))
     # do all the ports!
     with Pool(processes=NUM_PROCESSES) as pool:
-        inputdata = [(proto, port) for port in os.listdir(protodatadir)]
+        inputdata = [(proto, port) for port in os.listdir(protodatadir.as_posix())]
         for i in pool.imap_unordered(do_content, inputdata):
             pass
-
