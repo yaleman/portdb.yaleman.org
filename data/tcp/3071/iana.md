@@ -1,4 +1,4 @@
-_Name:_ csd-mgmt-port
+_Name:_ xplat-replicate
 
-_Description:_ ContinuStor Manager Port
+_Description:_ Crossplatform replication protocol
 

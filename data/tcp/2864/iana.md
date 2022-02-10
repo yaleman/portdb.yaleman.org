@@ -1,4 +1,4 @@
-_Name:_ astromed-main
+_Name:_ astronova-main
 
 _Description:_ main 5001 cmd
 

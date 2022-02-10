@@ -1,4 +1,4 @@
 _Name:_ vatp
 
-_Description:_ Velazquez Application Transfer Protocol
+_Description:_ Velneo Application Transfer Protocol
 

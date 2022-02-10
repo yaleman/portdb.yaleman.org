@@ -1,4 +1,4 @@
 _Name:_ opswagent
 
-_Description:_ Opsware Agent
+_Description:_ Server Automation Agent
 

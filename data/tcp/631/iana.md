@@ -1,6 +1,4 @@
-_Name:_ ipp
+_Name:_ ipps
 
-_Description:_ IPP (Internet Printing Protocol)
-
-_Note:_ Defined TXT keys: See BonjourPrinting.pdf.
+_Description:_ Internet Printing Protocol over HTTPS
 

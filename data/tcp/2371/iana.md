@@ -1,4 +1,4 @@
-_Name:_ worldwire
+_Name:_ rda
 
-_Description:_ Compaq WorldWire Port
+_Description:_ Remote Device Access
 

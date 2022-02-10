@@ -1,4 +1,4 @@
-_Name:_ smc-https
+_Name:_ radg
 
-_Description:_ SMC-HTTPS
+_Description:_ GSS-API for the Oracle Remote Administration Daemon
 

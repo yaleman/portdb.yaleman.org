@@ -1,4 +1,4 @@
-_Name:_ visicron-vs
+_Name:_ trueconf
 
-_Description:_ Visicron Videoconference Service
+_Description:_ TrueConf Videoconference Service
 

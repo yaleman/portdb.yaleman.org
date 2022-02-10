@@ -1,4 +1,4 @@
-_Name:_ owamp-control
+_Name:_ owamp-test
 
-_Description:_ OWAMP-Control
+_Description:_ OWAMP-Test
 

@@ -1,4 +1,4 @@
 _Name:_ fyre-messanger
 
-_Description:_ Fyre Messagner
+_Description:_ Fyre Messanger
 

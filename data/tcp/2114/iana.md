@@ -1,4 +1,4 @@
-_Name:_ newheights
+_Name:_ ariascribe
 
-_Description:_ NEWHEIGHTS
+_Description:_ Classical Music Meta-Data Access and Enhancement
 

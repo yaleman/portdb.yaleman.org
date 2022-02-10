@@ -1,4 +1,4 @@
 _Name:_ twamp-control
 
-_Description:_ Two-way Active Measurement Protocol (TWAMP) Control
+_Description:_ TWAMP-Control
 

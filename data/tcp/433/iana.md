@@ -1,4 +1,4 @@
 _Name:_ nnsp
 
-_Description:_ NNSP
+_Description:_ NNTP for transit servers (NNSP)
 

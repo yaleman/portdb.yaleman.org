@@ -1,4 +1,4 @@
-_Name:_ enc-tunnel-sec
+_Name:_ dof-tunnel-sec
 
-_Description:_ EMIT secure tunnel
+_Description:_ DOF Secure Tunnel
 

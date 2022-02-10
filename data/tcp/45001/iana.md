@@ -1,4 +1,4 @@
 _Name:_ asmps
 
-_Description:_ NSi AutoStore Status Monitoring Protocol secure data transfer
+_Description:_ Nuance AutoStore Status Monitoring Protocol (secure data transfer)
 

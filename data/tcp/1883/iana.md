@@ -1,4 +1,4 @@
-_Name:_ ibm-mqisdp
+_Name:_ mqtt
 
-_Description:_ IBM MQSeries SCADA
+_Description:_ Message Queuing Telemetry Transport Protocol
 

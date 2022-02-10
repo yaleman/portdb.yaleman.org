@@ -1,4 +1,4 @@
-_Name:_ enc-tunnel
+_Name:_ dof-tunnel
 
-_Description:_ EMIT tunneling protocol
+_Description:_ DOF Tunneling Protocol
 

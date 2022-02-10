@@ -1,4 +1,4 @@
-_Name:_ zfirm-shiprush3
+_Name:_ shiprush-db-svr
 
-_Description:_ Z-Firm ShipRush v3
+_Description:_ ShipRush Database Server
 

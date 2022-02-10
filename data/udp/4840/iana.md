@@ -1,4 +1,4 @@
 _Name:_ opcua-udp
 
-_Description:_ OPC UA TCP Protocol
+_Description:_ OPC UA Multicast Datagram Protocol
 

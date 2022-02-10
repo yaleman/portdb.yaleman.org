@@ -1,4 +1,4 @@
-_Name:_ hp-dataprotect
+_Name:_ dataprotector
 
-_Description:_ HP Data Protector
+_Description:_ Micro Focus Data Protector
 

@@ -1,4 +1,4 @@
-_Name:_ community
+_Name:_ xrpl
 
 _Description:_ Community
 

@@ -1,4 +1,6 @@
-_Name:_ dbsa-lm
+_Name:_ tibet-server
 
-_Description:_ DBSA License Manager
+_Description:_ TIBET Data Server
+
+_Note:_ This port has been retasked on 2015-06-16.
 

@@ -1,4 +1,4 @@
-_Name:_ urd
+_Name:_ submissions
 
-_Description:_ URL Rendesvous Directory for SSM
+_Description:_ Message Submission over TLS protocol
 

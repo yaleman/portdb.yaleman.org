@@ -1,4 +1,4 @@
 _Name:_ ethercat
 
-_Description:_ EhterCAT Port
+_Description:_ EtherCAT Port
 

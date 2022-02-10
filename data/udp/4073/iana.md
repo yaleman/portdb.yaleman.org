@@ -1,4 +1,4 @@
 _Name:_ iRAPP
 
-_Description:_ iRAPP Server Protocol
+_Description:_ Interactive Remote Application Pairing Protocol
 

@@ -1,4 +1,4 @@
-_Name:_ enc-eps-mc-sec
+_Name:_ dof-dps-mc-sec
 
-_Description:_ EMIT protocol stack multicast/secure transport
+_Description:_ DOF Protocol Stack Multicast/Secure Transport
 

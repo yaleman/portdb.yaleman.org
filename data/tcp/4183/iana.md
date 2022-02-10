@@ -1,4 +1,4 @@
-_Name:_ gmmp
+_Name:_ cyborgnet
 
-_Description:_ General Metaverse Messaging Protocol
+_Description:_ CyborgNet communications protocol
 

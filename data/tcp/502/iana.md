@@ -1,4 +1,4 @@
-_Name:_ asa-appl-proto
+_Name:_ mbap
 
-_Description:_ asa-appl-proto
+_Description:_ Modbus Application Protocol
 

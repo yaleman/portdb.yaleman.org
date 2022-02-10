@@ -1,4 +1,4 @@
 _Name:_ cwmp
 
-_Description:_ DSL Forum CWMP
+_Description:_ Broadband Forum CWMP
 

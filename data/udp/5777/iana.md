@@ -1,4 +1,4 @@
-_Name:_ dali-port
+_Name:_ starfield-io
 
-_Description:_ DALI Port
+_Description:_ Control commands and responses
 

@@ -1,4 +1,4 @@
-_Name:_ enc-eps
+_Name:_ dof-eps
 
-_Description:_ EMIT protocol stack
+_Description:_ DOF Protocol Stack
 

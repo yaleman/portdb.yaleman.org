@@ -1,4 +1,4 @@
 _Name:_ sysinfo-sp
 
-_Description:_ SysInfo Sercice Protocol
+_Description:_ SysInfo Service Protocol
 

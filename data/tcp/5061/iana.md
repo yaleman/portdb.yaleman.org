@@ -1,4 +1,4 @@
-_Name:_ sip-tls
+_Name:_ sips
 
 _Description:_ SIP-TLS
 

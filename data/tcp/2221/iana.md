@@ -1,4 +1,4 @@
-_Name:_ rockwell-csp1
+_Name:_ ethernet-ip-s
 
-_Description:_ Rockwell CSP1
+_Description:_ EtherNet/IP over TLS
 
