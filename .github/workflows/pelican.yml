@@ -21,10 +21,8 @@ jobs:
         python --version
         python -m pip install --quiet --no-cache-dir --upgrade poetry
         poetry install --no-dev
-        poetry run pelican content
-    - name: Running ghp-import
+    - name: Running github-deploy
       run: |
-        poetry run ghp-import output -b gh-pages
         ./github-deploy.sh
 
 

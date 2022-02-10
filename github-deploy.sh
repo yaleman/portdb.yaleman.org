@@ -9,7 +9,7 @@ remote_repo="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITO
 remote_branch=${GH_PAGES_BRANCH:=gh-pages}
 
 echo 'Building site 👷 '
-pelican "${PELICAN_CONTENT_FOLDER:=content}" -o output -s "${PELICAN_CONFIG_FILE:=publishconf.py}"
+poetry run pelican "${PELICAN_CONTENT_FOLDER:=content}" -o output -s "${PELICAN_CONFIG_FILE:=publishconf.py}"
 
 echo 'Publishing to GitHub Pages 📤 '
 pushd output
