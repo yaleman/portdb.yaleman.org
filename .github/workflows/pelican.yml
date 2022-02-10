@@ -21,9 +21,9 @@ jobs:
         python --version
         python -m pip install --quiet --no-cache-dir --upgrade poetry
         poetry install --no-dev
-
     - name: Running github-deploy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+
         ./github-deploy.sh
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
