@@ -24,6 +24,7 @@ jobs:
     - name: Running github-deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_PAGES_CNAME: portdb.yaleman.org
       run: |
 
         ./github-deploy.sh
