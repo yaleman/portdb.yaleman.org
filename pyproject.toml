@@ -12,7 +12,7 @@ pelican = {extras = ["markdown"], version = "^4.7.2"}
 ghp-import = "^2.0.2"
 
 [tool.poetry.dev-dependencies]
-pylint = "^2.13.7"
+pylint = "^2.13.8"
 pytest = "^7.1.2"
 black = "^22.3.0"
 mypy = "^0.950"
