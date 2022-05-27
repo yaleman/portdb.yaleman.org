@@ -7,7 +7,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-httpx = "^0.22.0"
+httpx = "^0.23.0"
 pelican = {extras = ["markdown"], version = "^4.7.2"}
 ghp-import = "^2.1.0"
 
