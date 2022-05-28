@@ -18,7 +18,7 @@ from typing import Any, Dict, Optional
 import re
 import sys
 
-import httpx
+import requests
 
 FILENAME = Path("service-names-port-numbers.xml").resolve()
 
@@ -26,7 +26,7 @@ if not FILENAME.exists():
     print(f"Can't find {FILENAME.as_posix()}, trying to download it.")
     try:
 
-        filecontent = httpx.get("https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml")
+        filecontent = requests.get("https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml")
         filecontent.raise_for_status()
     # pylint: disable=broad-except
     except Exception as error:
