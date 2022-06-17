@@ -12,7 +12,7 @@ ghp-import = "^2.1.0"
 requests = "^2.28.0"
 
 [tool.poetry.dev-dependencies]
-pylint = "^2.14.1"
+pylint = "^2.14.2"
 pytest = "^7.1.2"
 black = "^22.3.0"
 mypy = "^0.961"
