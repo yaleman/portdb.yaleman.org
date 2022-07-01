@@ -9,7 +9,7 @@ license = "MIT"
 python = "^3.9"
 pelican = {extras = ["markdown"], version = "^4.7.2"}
 ghp-import = "^2.1.0"
-requests = "^2.28.0"
+requests = "^2.28.1"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.14.4"
