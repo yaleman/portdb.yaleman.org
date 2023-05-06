@@ -8,6 +8,9 @@ name: Deploy to Github Pages
 
 jobs:
   build:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -22,3 +25,29 @@ jobs:
         python --version
         python -m pip install --quiet --no-cache-dir --upgrade poetry
         poetry install --no-dev
+    - name: Running github-deploy
+      # TODO: this should just use the github-deploy action
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_PAGES_CNAME: portdb.yaleman.org
+      run: |
+        ./github-deploy.sh
+      if: ${{ github.ref == 'refs/heads/main' }}
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: ./public
+      if: ${{ github.ref == 'refs/heads/main' }}
+
+  # Deployment job
+  deploy:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
