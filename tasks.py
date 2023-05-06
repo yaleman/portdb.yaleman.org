@@ -1,5 +1,5 @@
 """ pelican tasks """
-#pylint: disable=consider-using-f-strings
+#pylint: disable=consider-using-f-string
 
 import os
 import shlex
@@ -91,7 +91,8 @@ def preview(_c):
 @task
 def livereload(_):
     """Automatically reload browser tab upon file modification."""
-    from livereload import Server #pylint: disable=import-outside-toplevel
+    #pylint: disable=import-outside-toplevel
+    from livereload import Server # type: ignore
 
     def cached_build():
         cmd = '-s {settings_base} -e CACHE_CONTENT=True LOAD_CONTENT_CACHE=True'
