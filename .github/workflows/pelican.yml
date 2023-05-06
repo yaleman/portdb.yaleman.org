@@ -3,8 +3,22 @@ name: Deploy to Github Pages
 
 "on":
   push:
-    branches:
-      - main
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued
+# between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow
+# these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -25,18 +39,16 @@ jobs:
         python --version
         python -m pip install --quiet --no-cache-dir --upgrade poetry
         poetry install --no-dev
-    - name: Running github-deploy
-      # TODO: this should just use the github-deploy action
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_PAGES_CNAME: portdb.yaleman.org
-      run: |
-        ./github-deploy.sh
+    - name: Setup Pages
+      id: pages
+      uses: actions/configure-pages@v3
       if: ${{ github.ref == 'refs/heads/main' }}
+    - name: Building pages
+      run: make html
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v1
       with:
-        path: ./public
+        path: ./output
       if: ${{ github.ref == 'refs/heads/main' }}
 
   # Deployment job
