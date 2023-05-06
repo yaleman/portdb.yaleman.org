@@ -1,5 +1,5 @@
 """ pelican tasks """
-#pylint: disable=consider-using-f-string
+#pylint: disable=consider-using-f-strings
 
 import os
 import shlex

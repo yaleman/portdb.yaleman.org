@@ -9,7 +9,7 @@ import sys
 sys.path.append(os.curdir)
 
 #pylint: disable=wildcard-import,wrong-import-position,unused-wildcard-import
-from pelicanconf import *
+from pelicanconf import * # noqa E402,F403
 
 # If your site is available via HTTPS, make sure SITEURL begins with https://
 SITEURL = 'https://portdb.yaleman.org'
