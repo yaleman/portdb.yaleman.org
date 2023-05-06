@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+""" pelican tasks """
+#pylint: disable=consider-using-f-string
 
 import os
 import shlex
@@ -8,10 +9,10 @@ import datetime
 
 from invoke import task
 from invoke.main import program
-from invoke.util import cd
-from pelican import main as pelican_main
-from pelican.server import ComplexHTTPRequestHandler, RootedHTTPServer
-from pelican.settings import DEFAULT_CONFIG, get_settings_from_file
+# from invoke.util import cd
+from pelican import main as pelican_main # type: ignore
+from pelican.server import ComplexHTTPRequestHandler, RootedHTTPServer # type: ignore
+from pelican.settings import DEFAULT_CONFIG, get_settings_from_file # type: ignore
 
 OPEN_BROWSER_ON_SERVE = True
 SETTINGS_FILE_BASE = 'pelicanconf.py'
@@ -27,39 +28,40 @@ CONFIG = {
     'deploy_path': SETTINGS['OUTPUT_PATH'],
     # Github Pages configuration
     'github_pages_branch': 'gh-pages',
-    'commit_message': "'Publish site on {}'".format(datetime.date.today().isoformat()),
+    'commit_message': f"'Publish site on {datetime.date.today().isoformat()}'",
     # Host and port for `serve`
     'host': 'localhost',
     'port': 8000,
 }
 
 @task
-def clean(c):
+def clean(_):
     """Remove generated files"""
     if os.path.isdir(CONFIG['deploy_path']):
         shutil.rmtree(CONFIG['deploy_path'])
         os.makedirs(CONFIG['deploy_path'])
 
 @task
-def build(c):
+def build(_):
     """Build local version of site"""
     pelican_run('-s {settings_base}'.format(**CONFIG))
 
 @task
-def rebuild(c):
+def rebuild(_):
     """`build` with the delete switch"""
     pelican_run('-d -s {settings_base}'.format(**CONFIG))
 
 @task
-def regenerate(c):
+def regenerate(_):
     """Automatically regenerate site upon file modification"""
     pelican_run('-r -s {settings_base}'.format(**CONFIG))
 
 @task
-def serve(c):
+def serve(_):
     """Serve site at http://$HOST:$PORT/ (default is localhost:8000)"""
 
     class AddressReuseTCPServer(RootedHTTPServer):
+        """ things """
         allow_reuse_address = True
 
     server = AddressReuseTCPServer(
@@ -69,27 +71,27 @@ def serve(c):
 
     if OPEN_BROWSER_ON_SERVE:
         # Open site in default browser
-        import webbrowser
+        import webbrowser # pylint: disable=import-outside-toplevel
         webbrowser.open("http://{host}:{port}".format(**CONFIG))
 
     sys.stderr.write('Serving at {host}:{port} ...\n'.format(**CONFIG))
     server.serve_forever()
 
 @task
-def reserve(c):
+def reserve(command):
     """`build`, then `serve`"""
-    build(c)
-    serve(c)
+    build(command)
+    serve(command)
 
 @task
-def preview(c):
+def preview(_c):
     """Build production version of site"""
     pelican_run('-s {settings_publish}'.format(**CONFIG))
 
 @task
-def livereload(c):
+def livereload(_):
     """Automatically reload browser tab upon file modification."""
-    from livereload import Server
+    from livereload import Server #pylint: disable=import-outside-toplevel
 
     def cached_build():
         cmd = '-s {settings_base} -e CACHE_CONTENT=True LOAD_CONTENT_CACHE=True'
@@ -118,17 +120,17 @@ def livereload(c):
 
     if OPEN_BROWSER_ON_SERVE:
         # Open site in default browser
-        import webbrowser
+        import webbrowser #pylint: disable=import-outside-toplevel
         webbrowser.open("http://{host}:{port}".format(**CONFIG))
 
     server.serve(host=CONFIG['host'], port=CONFIG['port'], root=CONFIG['deploy_path'])
 
 
 @task
-def publish(c):
+def publish(command):
     """Publish to production via rsync"""
     pelican_run('-s {settings_publish}'.format(**CONFIG))
-    c.run(
+    command.run(
         'rsync --delete --exclude ".DS_Store" -pthrvz -c '
         '-e "ssh -p {ssh_port}" '
         '{} {ssh_user}@{ssh_host}:{ssh_path}'.format(
@@ -136,13 +138,14 @@ def publish(c):
             **CONFIG))
 
 @task
-def gh_pages(c):
+def gh_pages(command):
     """Publish to GitHub Pages"""
-    preview(c)
-    c.run('ghp-import -b {github_pages_branch} '
+    preview(command)
+    command.run('ghp-import -b {github_pages_branch} '
           '-m {commit_message} '
           '{deploy_path} -p'.format(**CONFIG))
 
 def pelican_run(cmd):
+    """ run """
     cmd += ' ' + program.core.remainder  # allows to pass-through args to pelican
     pelican_main(shlex.split(cmd))

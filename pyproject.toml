@@ -11,6 +11,8 @@ license = "MIT"
 python = "^3.9"
 ghp-import = "^2.1.0"
 requests = "^2.30.0"
+invoke = "^2.1.1"
+livereload = "^2.6.3"
 
 [tool.poetry.dependencies.pelican]
 extras = [
@@ -29,6 +31,7 @@ types-requests = "^2.30.0"
 ruff = "^0.0.265"
 mypy = "^1.2.0"
 black = "^23.3.0"
+types-invoke = "^2.0.0.6"
 
 [build-system]
 requires = [

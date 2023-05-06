@@ -26,7 +26,10 @@ if not FILENAME.exists():
     print(f"Can't find {FILENAME.as_posix()}, trying to download it.")
     try:
 
-        filecontent = requests.get("https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml")
+        filecontent = requests.get(
+            "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml", # pylint: disable=line-too-long
+            timeout=30,
+            )
         filecontent.raise_for_status()
     # pylint: disable=broad-except
     except Exception as error:
