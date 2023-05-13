@@ -6,4 +6,4 @@ Only the latest released version is supported - if a major issue appears, old on
 
 ## Reporting a Vulnerability
 
-Please contact me via email at james+portdb.yaleman.org@terminaloutcomes.com
+Please contact me via email at <james+portdb.yaleman.org@terminaloutcomes.com>
