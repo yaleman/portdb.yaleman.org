@@ -851,14 +851,14 @@ files = [
 
 [[package]]
 name = "types-invoke"
-version = "2.0.0.7"
+version = "2.0.0.8"
 description = "Typing stubs for invoke"
 category = "dev"
 optional = false
 python-versions = "*"
 files = [
-    {file = "types-invoke-2.0.0.7.tar.gz", hash = "sha256:09c3e2a146526f0f7c4db9957a47e3b6e09538f7c4c9fd3b36cfff2f454efff7"},
-    {file = "types_invoke-2.0.0.7-py3-none-any.whl", hash = "sha256:a2e27da61f939a97c2c769047ec2a0c567893b51fbdefe2d512b2dad60b2dd4e"},
+    {file = "types-invoke-2.0.0.8.tar.gz", hash = "sha256:2d6e59f7501a463c4ff5a6658fefa4898e0e6c058e4f1c547837a2591c0eb1b2"},
+    {file = "types_invoke-2.0.0.8-py3-none-any.whl", hash = "sha256:a0340198f62ec072dcaae0e69ee61fb12c334c8a658cc075946cdd16f3f88dc5"},
 ]
 
 [[package]]
@@ -1022,4 +1022,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "bca90ce4b7149d446bcd49153c976b84054b2cafed6bda70bbe88bd11d054132"
+content-hash = "a079ebfb95933bcb0fbab5849a81cc8fc642f1e5a18689928a372ec4fd1b897e"
