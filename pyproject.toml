@@ -11,7 +11,7 @@ license = "MIT"
 python = "^3.9"
 ghp-import = "^2.1.0"
 requests = "^2.30.0"
-invoke = "^2.1.1"
+invoke = "^2.1.2"
 livereload = "^2.6.3"
 
 [tool.poetry.dependencies.pelican]
