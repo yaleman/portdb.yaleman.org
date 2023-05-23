@@ -10,7 +10,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.9"
 ghp-import = "^2.1.0"
-requests = "^2.30.0"
+requests = "^2.31.0"
 invoke = "^2.1.2"
 livereload = "^2.6.3"
 
