@@ -31,7 +31,7 @@ types-requests = "^2.31.0"
 ruff = "^0.0.278"
 mypy = "^1.4.0"
 black = "^23.7.0"
-types-invoke = "^2.0.0.8"
+types-invoke = "^2.0.0.9"
 
 [build-system]
 requires = [
