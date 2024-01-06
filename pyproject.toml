@@ -22,7 +22,7 @@ version = "^4.9.1"
 
 [tool.poetry.dev-dependencies]
 pylint = "^3.0.3"
-pytest = "^7.4.3"
+pytest = "^7.4.4"
 black = "^23.12.1"
 mypy = "^1.8"
 types-requests = "^2.31.0"
