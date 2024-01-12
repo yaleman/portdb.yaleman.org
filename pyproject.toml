@@ -28,7 +28,7 @@ mypy = "^1.8"
 types-requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.1.11"
+ruff = "^0.1.13"
 mypy = "^1.8.0"
 black = "^23.12.1"
 types-invoke = "^2.0.0.10"
