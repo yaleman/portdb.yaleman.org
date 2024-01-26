@@ -23,14 +23,14 @@ version = "^4.9.1"
 [tool.poetry.dev-dependencies]
 pylint = "^3.0.3"
 pytest = "^7.4.4"
-black = "^23.12.1"
+black = "^24.1.0"
 mypy = "^1.8"
 types-requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.14"
 mypy = "^1.8.0"
-black = "^23.12.1"
+black = "^24.1.0"
 types-invoke = "^2.0.0.10"
 
 [build-system]
