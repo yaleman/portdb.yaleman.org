@@ -370,18 +370,17 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "livereload"
-version = "2.6.3"
+version = "2.7.0"
 description = "Python LiveReload is an awesome tool for web developers"
 optional = false
-python-versions = "*"
+python-versions = ">=3.7"
 files = [
-    {file = "livereload-2.6.3-py2.py3-none-any.whl", hash = "sha256:ad4ac6f53b2d62bb6ce1a5e6e96f1f00976a32348afedcb4b6d68df2a1d346e4"},
-    {file = "livereload-2.6.3.tar.gz", hash = "sha256:776f2f865e59fde56490a56bcc6773b6917366bce0c267c60ee8aaf1a0959869"},
+    {file = "livereload-2.7.0-py3-none-any.whl", hash = "sha256:19bee55aff51d5ade6ede0dc709189a0f904d3b906d3ea71641ed548acff3246"},
+    {file = "livereload-2.7.0.tar.gz", hash = "sha256:f4ba199ef93248902841e298670eebfe1aa9e148e19b343bc57dbf1b74de0513"},
 ]
 
 [package.dependencies]
-six = "*"
-tornado = {version = "*", markers = "python_version > \"2.7\""}
+tornado = "*"
 
 [[package]]
 name = "markdown"
@@ -1068,4 +1067,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "3a489ed5e602ce8e046de3c149ba376658f1124785a461cc55d4e3ad63dda260"
+content-hash = "ec4ff4ecca08cbb1566795c019da53a84b24a37fa5b8f093054f5edf96cab02e"
