@@ -611,13 +611,13 @@ files = [
 
 [[package]]
 name = "pelican"
-version = "4.9.1"
+version = "4.10.0"
 description = "Static site generator supporting Markdown and reStructuredText"
 optional = false
 python-versions = "<4.0,>=3.8.1"
 files = [
-    {file = "pelican-4.9.1-py3-none-any.whl", hash = "sha256:713ea66c6a73bde405acd333d5ee746273850a5350a3c0045f2be991d79bd708"},
-    {file = "pelican-4.9.1.tar.gz", hash = "sha256:c08434f0df2a6b649cfe485cbf0d8fdb727ff89ba6ecb1c867f88ceb2f37f179"},
+    {file = "pelican-4.10.0-py3-none-any.whl", hash = "sha256:90ed89a681c3b65828ffce6810cf73da23996e1b2138862f52bd984f3f526805"},
+    {file = "pelican-4.10.0.tar.gz", hash = "sha256:7a5b8e035152b030f3f451019c9b25959b760f5e18f2315ae01bf2f583a44af5"},
 ]
 
 [package.dependencies]
@@ -1068,4 +1068,4 @@ test = ["big-O", "jaraco.functools", "jaraco.itertools", "jaraco.test", "more-it
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "14d9c546c9b78cf54a3af7435cd9385fb3a624c81394e9c320265f170bd76561"
+content-hash = "0f8e5deb6f0e79818f06f87640ca77948524b5253fa966e8cbf21e7dc5dda647"
