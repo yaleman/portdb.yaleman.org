@@ -18,7 +18,7 @@ livereload = "^2.7.0"
 extras = [
     "markdown",
 ]
-version = "^4.10.1"
+version = "^4.10.2"
 
 [tool.poetry.dev-dependencies]
 pylint = "^3.3.1"
