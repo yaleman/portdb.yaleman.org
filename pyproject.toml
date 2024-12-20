@@ -12,7 +12,7 @@ python = "^3.9"
 ghp-import = "^2.1.0"
 requests = "^2.32.3"
 invoke = "^2.2.0"
-livereload = "^2.7.0"
+livereload = "^2.7.1"
 
 [tool.poetry.dependencies.pelican]
 extras = [
