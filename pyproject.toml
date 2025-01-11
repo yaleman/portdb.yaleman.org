@@ -2,10 +2,10 @@
 name = "portdb_yaleman_org"
 version = "0.0.1"
 description = ""
-authors = [
-    "James Hodgkinson <james@terminaloutcomes.com>",
-]
+authors = ["James Hodgkinson <james@terminaloutcomes.com>"]
 license = "MIT"
+
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -15,9 +15,7 @@ invoke = "^2.2.0"
 livereload = "^2.7.1"
 
 [tool.poetry.dependencies.pelican]
-extras = [
-    "markdown",
-]
+extras = ["markdown"]
 version = "^4.10.2"
 
 [tool.poetry.dev-dependencies]
@@ -28,15 +26,13 @@ mypy = "^1.14"
 types-requests = "^2.32.0"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.8.5"
+ruff = "^0.9.0"
 mypy = "^1.14.1"
 black = "^24.10.0"
 types-invoke = "^2.0.0.10"
 
 [build-system]
-requires = [
-    "poetry-core>=1.0.0",
-]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [project]
@@ -44,9 +40,7 @@ name = "portdb_yaleman_org"
 description = ""
 license = "MIT"
 version = "0.0.1"
-authors = [
-    { name = "James Hodgkinson", email = "james@terminaloutcomes.com" },
-]
+authors = [{ name = "James Hodgkinson", email = "james@terminaloutcomes.com" }]
 
 [tool.ruff]
 line-length = 200
