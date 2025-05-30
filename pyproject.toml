@@ -22,12 +22,12 @@ version = "^4.11.0"
 pylint = "^3.3.7"
 pytest = "^8.3.5"
 black = "^25.1.0"
-mypy = "^1.15"
+mypy = "^1.16"
 types-requests = "^2.32.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.11.11"
-mypy = "^1.15.0"
+mypy = "^1.16.0"
 black = "^25.1.0"
 types-invoke = "^2.0.0.10"
 
