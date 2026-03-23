@@ -25,6 +25,7 @@ dev = [
     "ty>=0.0.24",
     "livereload>=2.7.1",
     "types-requests>=2.32.4.20260107",
+    "pytest>=9.0.2",
 ]
 
 [tool.pdm]
