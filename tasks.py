@@ -1,5 +1,5 @@
-""" pelican tasks """
-#pylint: disable=consider-using-f-string
+"""pelican tasks"""
+# pylint: disable=consider-using-f-string
 
 import os
 import shlex
@@ -9,73 +9,78 @@ import datetime
 
 from invoke import task
 from invoke.main import program
-# from invoke.util import cd
-from pelican import main as pelican_main # type: ignore
-from pelican.server import ComplexHTTPRequestHandler, RootedHTTPServer # type: ignore
-from pelican.settings import DEFAULT_CONFIG, get_settings_from_file # type: ignore
+
+from pelican import main as pelican_main
+from pelican.server import ComplexHTTPRequestHandler, RootedHTTPServer
+from pelican.settings import DEFAULT_CONFIG, get_settings_from_file
 
 OPEN_BROWSER_ON_SERVE = True
-SETTINGS_FILE_BASE = 'pelicanconf.py'
+SETTINGS_FILE_BASE = "pelicanconf.py"
 SETTINGS = {}
 SETTINGS.update(DEFAULT_CONFIG)
 LOCAL_SETTINGS = get_settings_from_file(SETTINGS_FILE_BASE)
 SETTINGS.update(LOCAL_SETTINGS)
 
 CONFIG = {
-    'settings_base': SETTINGS_FILE_BASE,
-    'settings_publish': 'publishconf.py',
+    "settings_base": SETTINGS_FILE_BASE,
+    "settings_publish": "publishconf.py",
     # Output path. Can be absolute or relative to tasks.py. Default: 'output'
-    'deploy_path': SETTINGS['OUTPUT_PATH'],
+    "deploy_path": SETTINGS["OUTPUT_PATH"],
     # Github Pages configuration
-    'github_pages_branch': 'gh-pages',
-    'commit_message': f"'Publish site on {datetime.date.today().isoformat()}'",
+    "github_pages_branch": "gh-pages",
+    "commit_message": f"'Publish site on {datetime.date.today().isoformat()}'",
     # Host and port for `serve`
-    'host': 'localhost',
-    'port': 8000,
+    "host": "localhost",
+    "port": 8000,
 }
+
 
 @task
 def clean(_):
     """Remove generated files"""
-    if os.path.isdir(CONFIG['deploy_path']):
-        shutil.rmtree(CONFIG['deploy_path'])
-        os.makedirs(CONFIG['deploy_path'])
+    if os.path.isdir(CONFIG["deploy_path"]):
+        shutil.rmtree(str(CONFIG["deploy_path"]))
+        os.makedirs(str(CONFIG["deploy_path"]))
+
 
 @task
 def build(_):
     """Build local version of site"""
-    pelican_run('-s {settings_base}'.format(**CONFIG))
+    pelican_run("-s {settings_base}".format(**CONFIG))
+
 
 @task
 def rebuild(_):
     """`build` with the delete switch"""
-    pelican_run('-d -s {settings_base}'.format(**CONFIG))
+    pelican_run("-d -s {settings_base}".format(**CONFIG))
+
 
 @task
 def regenerate(_):
     """Automatically regenerate site upon file modification"""
-    pelican_run('-r -s {settings_base}'.format(**CONFIG))
+    pelican_run("-r -s {settings_base}".format(**CONFIG))
+
 
 @task
 def serve(_):
     """Serve site at http://$HOST:$PORT/ (default is localhost:8000)"""
 
     class AddressReuseTCPServer(RootedHTTPServer):
-        """ things """
+        """things"""
+
         allow_reuse_address = True
 
-    server = AddressReuseTCPServer(
-        CONFIG['deploy_path'],
-        (CONFIG['host'], CONFIG['port']),
-        ComplexHTTPRequestHandler)
+    server = AddressReuseTCPServer(CONFIG["deploy_path"], (CONFIG["host"], CONFIG["port"]), ComplexHTTPRequestHandler)
 
     if OPEN_BROWSER_ON_SERVE:
         # Open site in default browser
-        import webbrowser # pylint: disable=import-outside-toplevel
+        import webbrowser  # pylint: disable=import-outside-toplevel
+
         webbrowser.open("http://{host}:{port}".format(**CONFIG))
 
-    sys.stderr.write('Serving at {host}:{port} ...\n'.format(**CONFIG))
+    sys.stderr.write("Serving at {host}:{port} ...\n".format(**CONFIG))
     server.serve_forever()
+
 
 @task
 def reserve(command):
@@ -83,37 +88,38 @@ def reserve(command):
     build(command)
     serve(command)
 
+
 @task
 def preview(_c):
     """Build production version of site"""
-    pelican_run('-s {settings_publish}'.format(**CONFIG))
+    pelican_run("-s {settings_publish}".format(**CONFIG))
+
 
 @task
 def livereload(_):
     """Automatically reload browser tab upon file modification."""
-    #pylint: disable=import-outside-toplevel
-    from livereload import Server # type: ignore
+    from livereload import Server
 
     def cached_build():
-        cmd = '-s {settings_base} -e CACHE_CONTENT=True LOAD_CONTENT_CACHE=True'
+        cmd = "-s {settings_base} -e CACHE_CONTENT=True LOAD_CONTENT_CACHE=True"
         pelican_run(cmd.format(**CONFIG))
 
     cached_build()
     server = Server()
-    theme_path = SETTINGS['THEME']
+    theme_path = SETTINGS["THEME"]
     watched_globs = [
-        CONFIG['settings_base'],
-        '{}/templates/**/*.html'.format(theme_path),
+        CONFIG["settings_base"],
+        "{}/templates/**/*.html".format(theme_path),
     ]
 
-    content_file_extensions = ['.md', '.rst']
+    content_file_extensions = [".md", ".rst"]
     for extension in content_file_extensions:
-        content_glob = '{0}/**/*{1}'.format(SETTINGS['PATH'], extension)
+        content_glob = "{0}/**/*{1}".format(SETTINGS["PATH"], extension)
         watched_globs.append(content_glob)
 
-    static_file_extensions = ['.css', '.js']
+    static_file_extensions = [".css", ".js"]
     for extension in static_file_extensions:
-        static_file_glob = '{0}/static/**/*{1}'.format(theme_path, extension)
+        static_file_glob = "{0}/static/**/*{1}".format(theme_path, extension)
         watched_globs.append(static_file_glob)
 
     for glob in watched_globs:
@@ -121,32 +127,28 @@ def livereload(_):
 
     if OPEN_BROWSER_ON_SERVE:
         # Open site in default browser
-        import webbrowser #pylint: disable=import-outside-toplevel
+        import webbrowser  # pylint: disable=import-outside-toplevel
+
         webbrowser.open("http://{host}:{port}".format(**CONFIG))
 
-    server.serve(host=CONFIG['host'], port=CONFIG['port'], root=CONFIG['deploy_path'])
+    server.serve(host=CONFIG["host"], port=CONFIG["port"], root=CONFIG["deploy_path"])
 
 
 @task
 def publish(command):
     """Publish to production via rsync"""
-    pelican_run('-s {settings_publish}'.format(**CONFIG))
-    command.run(
-        'rsync --delete --exclude ".DS_Store" -pthrvz -c '
-        '-e "ssh -p {ssh_port}" '
-        '{} {ssh_user}@{ssh_host}:{ssh_path}'.format(
-            CONFIG['deploy_path'].rstrip('/') + '/',
-            **CONFIG))
+    pelican_run("-s {settings_publish}".format(**CONFIG))
+    command.run('rsync --delete --exclude ".DS_Store" -pthrvz -c -e "ssh -p {ssh_port}" {} {ssh_user}@{ssh_host}:{ssh_path}'.format(str(CONFIG["deploy_path"]).rstrip("/") + "/", **CONFIG))
+
 
 @task
 def gh_pages(command):
     """Publish to GitHub Pages"""
     preview(command)
-    command.run('ghp-import -b {github_pages_branch} '
-          '-m {commit_message} '
-          '{deploy_path} -p'.format(**CONFIG))
+    command.run("ghp-import -b {github_pages_branch} -m {commit_message} {deploy_path} -p".format(**CONFIG))
+
 
 def pelican_run(cmd):
-    """ run """
-    cmd += ' ' + program.core.remainder  # allows to pass-through args to pelican
+    """run"""
+    cmd += " " + program.core.remainder  # allows to pass-through args to pelican
     pelican_main(shlex.split(cmd))
