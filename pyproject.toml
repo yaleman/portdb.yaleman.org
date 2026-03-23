@@ -1,6 +1,5 @@
-
 [project]
-name = "portdb_yaleman_org"
+name = "portdb"
 description = "PortDB website"
 license = { text = "MIT" }
 version = "0.0.2"
@@ -14,6 +13,7 @@ dependencies = [
     "pelican[markdown]>=4.11.0",
 ]
 
+
 [tool.ruff]
 line-length = 200
 
@@ -24,6 +24,7 @@ dev = [
     "types-invoke>=2.0.0.10",
     "ty>=0.0.24",
     "livereload>=2.7.1",
+    "types-requests>=2.32.4.20260107",
 ]
 
 [tool.pdm]

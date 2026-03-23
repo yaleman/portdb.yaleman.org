@@ -1,5 +1,7 @@
 """pelican tasks"""
+
 # pylint: disable=consider-using-f-string
+from typing import Any
 
 import os
 import shlex
@@ -36,7 +38,7 @@ CONFIG = {
 
 
 @task
-def clean(_):
+def clean(_: Any) -> None:
     """Remove generated files"""
     if os.path.isdir(CONFIG["deploy_path"]):
         shutil.rmtree(str(CONFIG["deploy_path"]))
@@ -44,25 +46,25 @@ def clean(_):
 
 
 @task
-def build(_):
+def build(_: Any) -> None:
     """Build local version of site"""
     pelican_run("-s {settings_base}".format(**CONFIG))
 
 
 @task
-def rebuild(_):
+def rebuild(_: Any) -> None:
     """`build` with the delete switch"""
     pelican_run("-d -s {settings_base}".format(**CONFIG))
 
 
 @task
-def regenerate(_):
+def regenerate(_: Any) -> None:
     """Automatically regenerate site upon file modification"""
     pelican_run("-r -s {settings_base}".format(**CONFIG))
 
 
 @task
-def serve(_):
+def serve(_: Any) -> None:
     """Serve site at http://$HOST:$PORT/ (default is localhost:8000)"""
 
     class AddressReuseTCPServer(RootedHTTPServer):
@@ -83,24 +85,24 @@ def serve(_):
 
 
 @task
-def reserve(command):
+def reserve(command) -> None:
     """`build`, then `serve`"""
     build(command)
     serve(command)
 
 
 @task
-def preview(_c):
+def preview(_c: Any) -> None:
     """Build production version of site"""
     pelican_run("-s {settings_publish}".format(**CONFIG))
 
 
 @task
-def livereload(_):
+def livereload(_: Any) -> None:
     """Automatically reload browser tab upon file modification."""
     from livereload import Server
 
-    def cached_build():
+    def cached_build() -> None:
         cmd = "-s {settings_base} -e CACHE_CONTENT=True LOAD_CONTENT_CACHE=True"
         pelican_run(cmd.format(**CONFIG))
 
@@ -135,20 +137,20 @@ def livereload(_):
 
 
 @task
-def publish(command):
+def publish(command: Any) -> None:
     """Publish to production via rsync"""
     pelican_run("-s {settings_publish}".format(**CONFIG))
     command.run('rsync --delete --exclude ".DS_Store" -pthrvz -c -e "ssh -p {ssh_port}" {} {ssh_user}@{ssh_host}:{ssh_path}'.format(str(CONFIG["deploy_path"]).rstrip("/") + "/", **CONFIG))
 
 
 @task
-def gh_pages(command):
+def gh_pages(command: Any) -> None:
     """Publish to GitHub Pages"""
     preview(command)
     command.run("ghp-import -b {github_pages_branch} -m {commit_message} {deploy_path} -p".format(**CONFIG))
 
 
-def pelican_run(cmd):
+def pelican_run(cmd: str) -> None:
     """run"""
     cmd += " " + program.core.remainder  # allows to pass-through args to pelican
     pelican_main(shlex.split(cmd))

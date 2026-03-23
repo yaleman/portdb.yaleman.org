@@ -375,7 +375,7 @@ markdown = [
 ]
 
 [[package]]
-name = "portdb-yaleman-org"
+name = "portdb"
 version = "0.0.2"
 source = { editable = "." }
 dependencies = [
@@ -393,6 +393,7 @@ dev = [
     { name = "ruff" },
     { name = "ty" },
     { name = "types-invoke" },
+    { name = "types-requests" },
 ]
 
 [package.metadata]
@@ -411,6 +412,7 @@ dev = [
     { name = "ruff", specifier = ">=0.15.7" },
     { name = "ty", specifier = ">=0.0.24" },
     { name = "types-invoke", specifier = ">=2.0.0.10" },
+    { name = "types-requests", specifier = ">=2.32.4.20260107" },
 ]
 
 [[package]]
@@ -544,6 +546,18 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/47/d3/9b0770d507a29753de0a0eb42fcb72e68963d9f12043eaaea3ff199467a1/types-invoke-2.0.0.10.tar.gz", hash = "sha256:a54d7ecdc19e0c22cd2786ef2e64c2631715c78eba8a1bf40b511d0608f33a88", size = 11300, upload-time = "2023-10-19T02:15:03.916Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/5c/bc/c0c925a97fb214e195a408a9e2d611a70225afa2bf298b5f670eb46dfe0b/types_invoke-2.0.0.10-py3-none-any.whl", hash = "sha256:2404e4279601fa96e14ef68321fd10a660a828677aabdcaeef6a5189778084ef", size = 13942, upload-time = "2023-10-19T02:15:02.225Z" },
+]
+
+[[package]]
+name = "types-requests"
+version = "2.32.4.20260107"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "urllib3" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/0f/f3/a0663907082280664d745929205a89d41dffb29e89a50f753af7d57d0a96/types_requests-2.32.4.20260107.tar.gz", hash = "sha256:018a11ac158f801bfa84857ddec1650750e393df8a004a8a9ae2a9bec6fcb24f", size = 23165, upload-time = "2026-01-07T03:20:54.091Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1c/12/709ea261f2bf91ef0a26a9eed20f2623227a8ed85610c1e54c5805692ecb/types_requests-2.32.4.20260107-py3-none-any.whl", hash = "sha256:b703fe72f8ce5b31ef031264fe9395cac8f46a04661a79f7ed31a80fb308730d", size = 20676, upload-time = "2026-01-07T03:20:52.929Z" },
 ]
 
 [[package]]
