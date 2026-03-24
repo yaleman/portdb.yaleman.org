@@ -5,6 +5,7 @@ name: Deploy to Github Pages
   push:
     branches:
       - main
+  pull_request:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -24,34 +25,22 @@ concurrency:
 
 jobs:
   build:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
-      with:
-        submodules: 'true'
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v6
-      with:
-        python-version: '3.10'
-    - name: Running pelican
-      run: |
-        python --version
-        python -m pip install --quiet --no-cache-dir --upgrade poetry
-        poetry install --no-dev
-    - name: Setup Pages
-      id: pages
-      uses: actions/configure-pages@v5
-      if: ${{ github.ref == 'refs/heads/main' }}
-    - name: Building pages
-      run: make html
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v4
-      with:
-        path: ./output
-      if: ${{ github.ref == 'refs/heads/main' }}
+      - uses: actions/checkout@v6
+        with:
+          submodules: "true"
+      - name: Running pelican
+        run: |
+          python -m pip install --quiet --no-cache-dir --upgrade uv
+          uv venv
+      - name: Building pages
+        run: make html
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./output
+        if: ${{ github.ref == 'refs/heads/main' }}
 
   # Deployment job
   deploy:
@@ -62,6 +51,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+        if: ${{ github.ref == 'refs/heads/main' }}
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
