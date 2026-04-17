@@ -37,7 +37,7 @@ jobs:
       - name: Building pages
         run: make html
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./output
         if: ${{ github.ref == 'refs/heads/main' }}
