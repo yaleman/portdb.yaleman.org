@@ -6,6 +6,7 @@ explicitly specify it as your config file.
 
 import os
 import sys
+
 sys.path.append(os.curdir)
 
 #pylint: disable=wildcard-import,wrong-import-position,unused-wildcard-import

@@ -7,8 +7,8 @@ authors = [{ name = "James Hodgkinson", email = "james@terminaloutcomes.com" }]
 requires-python = ">=3.13"
 dependencies = [
     "ghp-import>=2.1.0",
-    "requests>=2.32.5",
-    "invoke>=2.2.1",
+    "requests>=2.34.2",
+    "invoke>=3.0.3",
     "livereload>=2.7.1",
     "pelican[markdown]>=4.11.0",
 ]
@@ -19,7 +19,7 @@ line-length = 200
 
 [dependency-groups]
 dev = [
-    "ruff>=0.15.7",           #tricking TOML formatter into being nice
+    "ruff>=0.15.7",                    #tricking TOML formatter into being nice
     "mypy>=1.19.1",
     "types-invoke>=2.0.0.10",
     "ty>=0.0.24",

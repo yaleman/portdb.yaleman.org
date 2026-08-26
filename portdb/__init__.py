@@ -1,11 +1,11 @@
-from typing import TypedDict, Optional
+from typing import TypedDict
 
 
 class IndividualService(TypedDict):
     """a service dict"""
 
     name: str
-    protocol: Optional[str]
-    description: Optional[str]
-    note: Optional[str]
-    port: Optional[str]
+    protocol: str | None
+    description: str | None
+    note: str | None
+    port: str | None

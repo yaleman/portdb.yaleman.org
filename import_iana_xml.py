@@ -12,12 +12,14 @@ TODO: needs a serious clean-up
 """
 
 import os
-from pathlib import Path
-from typing import Any, Dict, Optional
 import re
 import sys
-from portdb import IndividualService
+from pathlib import Path
+from typing import Any
+
 import requests
+
+from portdb import IndividualService
 
 FILENAME = Path("service-names-port-numbers.xml").resolve()
 
@@ -30,7 +32,7 @@ if not FILENAME.exists():
         )
         filecontent.raise_for_status()
     # pylint: disable=broad-except
-    except Exception as error:
+    except Exception as error:  # noqa: BLE001
         print(f"Failed to grab XML: {error}")
         sys.exit(1)
     FILENAME.write_bytes(filecontent.content)
@@ -73,7 +75,7 @@ protocol_searcher = re.compile(r"<protocol>(.*?)</protocol>", re.DOTALL)
 description_searcher = re.compile(r"<description>(.*?)</description>", re.DOTALL)
 number_searcher = re.compile(r"<number>(.*?)</number>", re.DOTALL)
 note_searcher = re.compile(r"<note>(.*?)</note>", re.DOTALL)
-info: Dict[str, Any] = {}
+info: dict[str, Any] = {}
 
 for record_found in find_records.finditer(data):
     groupdict = record_found.groupdict()
@@ -95,7 +97,7 @@ for record_found in find_records.finditer(data):
             if dsearch is not None:
                 description = str(dsearch.group(1))
 
-            note: Optional[str] = None
+            note: str | None = None
             noteresult = note_searcher.search(record)
             if noteresult is not None:
                 note = noteresult.group(1)
@@ -120,12 +122,12 @@ noupdate = 0
 ignored = 0
 
 
-services: Dict[str, IndividualService] = {}
+services: dict[str, IndividualService] = {}
 ignored_services: list[IndividualService] = []
 # check you're running from the right directory
 if os.path.exists("data/"):
     print("Data directory exists, starting to process.")
-    for _, service in info.items():
+    for service in info.values():
         # pull the service info
         # service = info[item]
 

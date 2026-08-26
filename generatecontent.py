@@ -86,7 +86,7 @@ async def main() -> None:
             # os.mkdir(proto_output_dir)
             proto_output_dir.mkdir()
             print("Created protocol directory")
-        print((f"Processing {proto}"))
+        print(f"Processing {proto}")
         # do all the ports!
 
         show = False

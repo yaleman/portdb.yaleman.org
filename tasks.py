@@ -1,17 +1,16 @@
+#!/usr/bin/env python3
 """pelican tasks"""
 
 # pylint: disable=consider-using-f-string
-from typing import Any
-
+import datetime
 import os
 import shlex
 import shutil
 import sys
-import datetime
+from typing import Any
 
 from invoke import task
 from invoke.main import program
-
 from pelican import main as pelican_main
 from pelican.server import ComplexHTTPRequestHandler, RootedHTTPServer
 from pelican.settings import DEFAULT_CONFIG, get_settings_from_file
@@ -30,7 +29,7 @@ CONFIG = {
     "deploy_path": SETTINGS["OUTPUT_PATH"],
     # Github Pages configuration
     "github_pages_branch": "gh-pages",
-    "commit_message": f"'Publish site on {datetime.date.today().isoformat()}'",
+    "commit_message": f"'Publish site on {datetime.datetime.now().astimezone().today().isoformat()}'",
     # Host and port for `serve`
     "host": "localhost",
     "port": 8000,
@@ -40,7 +39,7 @@ CONFIG = {
 @task
 def clean(_: Any) -> None:
     """Remove generated files"""
-    if os.path.isdir(CONFIG["deploy_path"]):
+    if os.path.isdir(CONFIG["deploy_path"]):  # ty: ignore[invalid-argument-type]
         shutil.rmtree(str(CONFIG["deploy_path"]))
         os.makedirs(str(CONFIG["deploy_path"]))
 
@@ -111,17 +110,17 @@ def livereload(_: Any) -> None:
     theme_path = SETTINGS["THEME"]
     watched_globs = [
         CONFIG["settings_base"],
-        "{}/templates/**/*.html".format(theme_path),
+        f"{theme_path}/templates/**/*.html",
     ]
 
     content_file_extensions = [".md", ".rst"]
     for extension in content_file_extensions:
-        content_glob = "{0}/**/*{1}".format(SETTINGS["PATH"], extension)
+        content_glob = f"{SETTINGS['PATH']}/**/*{extension}"
         watched_globs.append(content_glob)
 
     static_file_extensions = [".css", ".js"]
     for extension in static_file_extensions:
-        static_file_glob = "{0}/static/**/*{1}".format(theme_path, extension)
+        static_file_glob = f"{theme_path}/static/**/*{extension}"
         watched_globs.append(static_file_glob)
 
     for glob in watched_globs:
