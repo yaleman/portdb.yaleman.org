@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Page not found · {{ config.title }}{% endblock title %}
+
+{% block content %}
+<h1>Page not found</h1>
+<p>The requested port page does not exist. Return to the <a href="{{ get_url(path='@/_index.md') }}">port lookup</a>.</p>
+{% endblock content %}

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
+  <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+  <link rel="icon" href="{{ get_url(path='apple-touch-icon.png') }}">
+  <link rel="stylesheet" href="{{ get_url(path='site.css', cachebust=true) }}">
+  <script src="{{ get_url(path='site.js', cachebust=true) }}" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="{{ get_url(path='@/_index.md') }}" aria-label="portDB home">
+      <img src="{{ get_url(path='ethernet_on.png') }}" width="40" height="40" alt="">
+      <span>portDB</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="{{ get_url(path='@/tcp/_index.md') }}">TCP</a>
+      <a href="{{ get_url(path='@/udp/_index.md') }}">UDP</a>
+    </nav>
+  </header>
+  <main id="content">
+    {% block content %}{% endblock content %}
+  </main>
+  <footer>
+    <p>Port data from <a href="https://www.iana.org/assignments/service-names-port-numbers/">IANA</a>. <a href="{{ config.extra.repository_url }}">Contribute on GitHub</a>.</p>
+  </footer>
+</body>
+</html>

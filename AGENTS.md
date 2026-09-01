@@ -2,16 +2,16 @@
 
 ## Project Structure & Module Organization
 
-This repository builds the `portdb.yaleman.org` Pelican site. Port source data lives under `data/{tcp,udp}/<port>/`; `generatecontent.py` turns it into Markdown in `content/{tcp,udp}/`. Keep hand-written notes in the source data directories rather than editing generated pages. Python types and shared code belong in `portdb/`, while automation is in `tasks.py`, `import_iana_xml.py`, and `generatecontent.py`. Theme templates and assets live in `themes/Just-Read/`; site-wide static files live in `static/`. Tests are under `tests/`. Pelican writes the ignored build output to `output/`.
+This repository builds the `portdb.yaleman.org` Zola site. Port source data lives under `data/{tcp,udp}/<port>/`; `generatecontent.py` turns it into Markdown in `content/{tcp,udp}/`. Keep hand-written notes in the source data directories rather than editing generated pages. Python types and shared code belong in `portdb/`, while Zola templates and site assets live in `templates/` and `static/`. Tests are under `tests/`. Zola writes the ignored build output to `output/`.
 
 ## Build, Test, and Development Commands
 
 Use Python 3.13 and `uv`; keep `uv.lock` synchronized with `pyproject.toml`.
 
 - `uv sync --all-groups` installs runtime and development dependencies.
-- `make html` builds the site into `output/` using `pelicanconf.py`.
-- `make devserver PORT=8000` rebuilds on changes and serves the local site.
-- `uv run python generatecontent.py` regenerates port Markdown and theme search data from `data/`.
+- `make build` builds the site into `output/` using `config.toml`.
+- `make serve` rebuilds on changes and serves the local site on port 1111.
+- `uv run python generatecontent.py` regenerates port Markdown and protocol indexes from `data/`.
 - `uv run pytest` runs the test suite.
 - `uv run ruff check` and `uv run ty check` reproduce the lint and type-check CI jobs.
 
@@ -23,7 +23,7 @@ Use four-space indentation and type annotations for Python. Follow Ruff's config
 
 ## Testing Guidelines
 
-Pytest discovers `test_*.py` files and `test_*` functions in `tests/`. Add focused tests for parsing, generation, and shared library behavior; do not place test helpers or library functions in executable entry points. There is currently no enforced coverage threshold. Before submitting, run pytest, Ruff, the type checker, and `make html`.
+Pytest discovers `test_*.py` files and `test_*` functions in `tests/`. Add focused tests for parsing, generation, and shared library behavior; do not place test helpers or library functions in executable entry points. There is currently no enforced coverage threshold. Before submitting, run pytest, Ruff, the type checker, and `make check`.
 
 ## Commit & Pull Request Guidelines
 

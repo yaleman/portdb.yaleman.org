@@ -1,101 +1,76 @@
-#!/usr/bin/env python
+"""Generate Zola content from the repository's port data."""
 
-"""content generator"""
-
-import asyncio
-import json
-import os
 from pathlib import Path
 
-TODAY = "1970-01-01T00:00:00+0000"
-
-DATADIR = "./data"
-OUTPUT_DIR = "content"
-
-PROTOCOLS = ["tcp", "udp"]
-NUM_PROCESSES = 4
-
-SEARCHFILE = Path("./themes/Just-Read/static/searchdata.json")
+DATA_DIR = Path("data")
+CONTENT_DIR = Path("content")
+PROTOCOLS = ("tcp", "udp")
 
 
-POST_TEMPLATE = """title: {port}
-category: {protocol}
-date: {TODAY}
-slug: {protocol}/{port}
-
-[portdb](/) / [{protocol}](/category/{protocol}.html) / {port}
-
-"""
-
-ALLDATA = []
-
-
-async def do_content(protocol: str, port: str, show: bool) -> bool:
-    """takes a protocol and port tuple and does the processing for that combination"""
-
-    portdir = f"{DATADIR}/{protocol}/{port}"
-    portfile = f"{OUTPUT_DIR}/{protocol}/{port}.md"
-    if os.path.isdir(portdir):
-        info = {"protocol": protocol, "port": port, "TODAY": TODAY}
-        # base template
-        portdata = POST_TEMPLATE.format(**info)
-        notes = ianadata = False
-        notesfile = Path(f"{portdir}/notes.md").resolve()
-        if notesfile.exists():
-            # notes file exists
-            portdata += f"\n{notesfile.read_text(encoding='utf8')}"
-            if show:
-                print(f"Notes for {protocol}/{port}:\n{notesfile.read_text(encoding='utf8')}")
-            notes = True
-        elif show:
-            print(f"Notes file {notesfile} not found")
-        ianafile = Path(f"{portdir}/iana.md")
-        if ianafile.exists():
-            # iana data exists
-            portdata += f"\n## IANA Data\n\n{ianafile.read_text(encoding='utf8')}"
-            ianadata = True
-        if True not in (notes, ianadata):
-            # die if there's no notes and data, that's weird.
-            print(f"No notes/ianadata for {protocol}/{port}")
-            return False
-        # check if we need to write to disk
-        writefile = False
-        portfile_ref = Path(portfile)
-        if portfile_ref.exists():
-            if portdata != portfile_ref.read_text(encoding="utf8"):
-                writefile = True
-        else:
-            writefile = True
-        if writefile:
-            portfile_ref.write_text(portdata, encoding="utf8")
-
-        ALLDATA.append(f"{protocol}/{port}")
-    return True
+def render_port(protocol: str, port: int, notes: str | None, iana_data: str | None) -> str:
+    """Render one port page with Zola front matter."""
+    sections = [
+        "+++",
+        f'title = "{port}"',
+        f"weight = {port}",
+        'template = "port.html"',
+        f'path = "{protocol}/{port}"',
+        "[extra]",
+        f'protocol = "{protocol}"',
+        "+++",
+    ]
+    if notes:
+        sections.extend(("", notes.strip()))
+    if iana_data:
+        sections.extend(("", "## IANA Data", "", iana_data.strip()))
+    return "\n".join(sections) + "\n"
 
 
-async def main() -> None:
-    """main func"""
-    for proto in PROTOCOLS:
-        proto_output_dir = Path(f"{OUTPUT_DIR}/{proto}")
-        protodatadir = Path(f"{DATADIR}/{proto}")
-        # die if can't find protocol data, probably something going horribly wrong
-        if not protodatadir.exists():
-            raise FileNotFoundError(f"Can't find protocol data dir for '{proto}'")
-        # did you nuke the output dir? let's create it.
-        if not proto_output_dir.exists():
-            # os.mkdir(proto_output_dir)
-            proto_output_dir.mkdir()
-            print("Created protocol directory")
-        print(f"Processing {proto}")
-        # do all the ports!
-
-        show = False
-        for port in os.listdir(protodatadir.as_posix()):
-            await do_content(proto, port, show=show)
+def render_section(protocol: str) -> str:
+    """Render a paginated protocol index."""
+    return f'''+++
+title = "{protocol.upper()} ports"
+description = "Browse known {protocol.upper()} port numbers."
+sort_by = "weight"
+paginate_by = 100
+template = "section.html"
+page_template = "port.html"
+aliases = ["/category/{protocol}.html"]
++++
+'''
 
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
-loop.close()
+def generate_protocol(protocol: str) -> int:
+    """Generate every page for one protocol and return the page count."""
+    source_dir = DATA_DIR / protocol
+    if not source_dir.is_dir():
+        raise FileNotFoundError(f"Missing protocol data directory: {source_dir}")
 
-SEARCHFILE.write_text(json.dumps(ALLDATA), encoding="utf8")
+    destination_dir = CONTENT_DIR / protocol
+    destination_dir.mkdir(parents=True, exist_ok=True)
+    (destination_dir / "_index.md").write_text(render_section(protocol), encoding="utf-8")
+
+    generated = 0
+    port_directories = (path for path in source_dir.iterdir() if path.is_dir() and path.name.isdigit())
+    for port_dir in sorted(port_directories, key=lambda path: int(path.name)):
+        notes_path = port_dir / "notes.md"
+        iana_path = port_dir / "iana.md"
+        notes = notes_path.read_text(encoding="utf-8") if notes_path.exists() else None
+        iana_data = iana_path.read_text(encoding="utf-8") if iana_path.exists() else None
+        if notes is None and iana_data is None:
+            raise ValueError(f"No notes or IANA data found for {protocol}/{port_dir.name}")
+
+        page = render_port(protocol, int(port_dir.name), notes, iana_data)
+        (destination_dir / f"{port_dir.name}.md").write_text(page, encoding="utf-8")
+        generated += 1
+    return generated
+
+
+def main() -> None:
+    """Generate all tracked port content."""
+    total = sum(generate_protocol(protocol) for protocol in PROTOCOLS)
+    print(f"Generated {total} port pages")
+
+
+if __name__ == "__main__":
+    main()

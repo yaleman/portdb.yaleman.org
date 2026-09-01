@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.extra.protocol | upper }} port {{ page.title }} · {{ config.title }}{% endblock title %}
+{% block description %}Details and known uses for {{ page.extra.protocol | upper }} port {{ page.title }}.{% endblock description %}
+
+{% block content %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ get_url(path='@/_index.md') }}">Home</a><span aria-hidden="true">/</span>
+  <a href="{{ get_url(path='@/' ~ page.extra.protocol ~ '/_index.md') }}">{{ page.extra.protocol | upper }}</a><span aria-hidden="true">/</span>
+  <span>{{ page.title }}</span>
+</nav>
+<article>
+  <h1>{{ page.extra.protocol | upper }} port {{ page.title }}</h1>
+  <div class="prose">{{ page.content | safe }}</div>
+</article>
+{% endblock content %}

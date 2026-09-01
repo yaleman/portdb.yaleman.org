@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section.title }} · {{ config.title }}{% endblock title %}
+{% block description %}{{ section.description }}{% endblock description %}
+
+{% block content %}
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="{{ get_url(path='@/_index.md') }}">Home</a><span aria-hidden="true">/</span><span>{{ section.title }}</span></nav>
+<h1>{{ section.title }}</h1>
+<p>{{ section.description }}</p>
+<ol class="port-grid">
+  {% for page in paginator.pages %}
+  <li><a href="{{ page.permalink }}">{{ page.title }}</a></li>
+  {% endfor %}
+</ol>
+<nav class="pagination" aria-label="Pagination">
+  {% if paginator.previous %}<a rel="prev" href="{{ paginator.previous }}">← Previous</a>{% else %}<span></span>{% endif %}
+  <span>Page {{ paginator.current_index }} of {{ paginator.number_pagers }}</span>
+  {% if paginator.next %}<a rel="next" href="{{ paginator.next }}">Next →</a>{% endif %}
+</nav>
+{% endblock content %}
