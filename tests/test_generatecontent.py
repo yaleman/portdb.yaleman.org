@@ -1,4 +1,4 @@
-from generatecontent import render_port, render_section
+from portdb.generator import render_port, render_section
 
 
 def test_render_port_uses_zola_front_matter_and_content() -> None:
