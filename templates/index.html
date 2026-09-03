@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <h1>Look up a network port</h1>
+  <p>Choose a protocol and enter a port number from 0 to 65535.</p>
+  <form class="port-lookup" data-port-lookup>
+    <label>
+      <span>Protocol</span>
+      <select name="protocol">
+        <option value="tcp">TCP</option>
+        <option value="udp">UDP</option>
+      </select>
+    </label>
+    <label>
+      <span>Port number</span>
+      <input name="port" type="number" min="0" max="65535" inputmode="numeric" required placeholder="443">
+    </label>
+    <button type="submit">View port</button>
+  </form>
+</section>
+
+<section aria-labelledby="browse-heading">
+  <h2 id="browse-heading">Browse by protocol</h2>
+  <div class="protocol-grid">
+    <a class="protocol-card" href="{{ get_url(path='@/tcp/_index.md') }}"><strong>TCP ports</strong><span>Connection-oriented services</span></a>
+    <a class="protocol-card" href="{{ get_url(path='@/udp/_index.md') }}"><strong>UDP ports</strong><span>Datagram-based services</span></a>
+  </div>
+</section>
+{% endblock content %}
